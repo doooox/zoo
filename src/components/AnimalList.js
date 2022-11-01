@@ -1,8 +1,8 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 const AnimalList = () => {
     const date = new Date().toISOString().toString();
-    const animals = [
+    const [animals, setAnimals] = useState([
         {
             id: 1,
             species: "Dog",
@@ -39,8 +39,9 @@ const AnimalList = () => {
             name: "Wings",
             dateOfBirth: ''
         },
-    ];
-    console.log(animals);
+    ]);
+    
+ 
     return (
         <div>
             <table>
@@ -49,7 +50,7 @@ const AnimalList = () => {
                         <th>species</th>
                         <th>name</th>
                         <th>Date of Birth</th>
-            
+
                     </tr>
                 </thead>
                 <tbody>
@@ -59,6 +60,19 @@ const AnimalList = () => {
                             <td>{animal.species}</td>
                             <td>{animal.name}</td>
                             <td>{animal.dateOfBirth ? animal.dateOfBirth : "Nepoznat"}</td>
+                            <td>
+                                <button
+                                    type='button'
+                                    onClick={() => {
+                                        setAnimals(
+                                            animals.filter(
+                                                (removedAnimal) => removedAnimal.id !== animal.id
+                                            ));
+                                    }}
+                                >
+                                    Remove
+                                </button>
+                            </td>
                         </tr>
                     )
                     )}
