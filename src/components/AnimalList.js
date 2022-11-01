@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import classes from './AnimalList.module.css'
+import Button from './Button';
 
 const AnimalList = () => {
     const date = new Date().toLocaleDateString();
@@ -66,11 +67,11 @@ const AnimalList = () => {
         setName('')
         setDateOfBirth();
 
-        if (species.trim().length === 0 && name.trim().length === 0 && dateOfBirth.trim().length === 0) {
+        if (species.trim().length === 0 || name.trim().length === 0 || dateOfBirth.trim().length === 0) {
             return alert('All fealds required!')
         }
 
-        return setAnimals([...animals, { species, name, dateOfBirth: date,sector, id: Math.random() }]);
+        return setAnimals([...animals, { species, name, dateOfBirth, sector, id: Math.random() }]);
     }
 
     return (
@@ -108,61 +109,91 @@ const AnimalList = () => {
                         return <option>{sector}</option>;
                     })}
                 </select>
-                <button type="submit">Submit</button>
+                <Button type="submit">Submit</Button>
             </form>
-            <table className={classes.table}>
-                <thead>
-                    <tr>
-                        <th>Species</th>
-                        <th>Name</th>
-                        <th>Date of Birth</th>
-                        <th>Sector</th>
+            <div className={classes.table}>
+                <table >
+                    <thead>
+                        <tr>
+                            <th>Species</th>
+                            <th>Name</th>
+                            <th>Date of Birth</th>
+                            <th>Sector</th>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    {animals.map((animal) =>
-                    (
-                        <tr key={animal.id}>
-                            <td>{animal.species}</td>
-                            <td>{animal.name}</td>
-                            <td>{animal.dateOfBirth ? animal.dateOfBirth : "Unknown"}</td>
-                            <td>{animal.sector ? animal.sector: "Unknown"}</td>
-                            <td>
-                                <button
-                                    type='button'
-                                    onClick={() => {
-                                        setAnimals(
-                                            animals.filter(
-                                                (removedAnimal) => removedAnimal.id !== animal.id
-                                            ));
-                                    }}
-                                >
-                                    Remove
-                                </button>
-                            </td>
-
-                            <td>
-                                <button
-                                    type='button'
-                                    onClick={() => {
-                                        setAnimals(
-                                            animals.reduce((prev, curr) => {
-                                                return animal.id === curr.id
-                                                    ? [curr, ...prev]
-                                                    : [...prev, curr];
-                                            }, [])
-                                        );
-                                    }}
-                                >
-                                    Move to top
-                                </button>
-                            </td>
                         </tr>
-                    )
-                    )}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {animals.map((animal) =>
+                        (
+                            <tr key={animal.id}>
+                                <td>{animal.species}</td>
+                                <td>{animal.name}</td>
+                                <td>{animal.dateOfBirth ? animal.dateOfBirth : "Unknown"}</td>
+                                <td>{animal.sector ? animal.sector : "Unknown"}</td>
+                                <td>
+                                    <button
+                                        type='button'
+                                        onClick={() => {
+                                            setAnimals(
+                                                animals.filter(
+                                                    (removedAnimal) => removedAnimal.id !== animal.id
+                                                ));
+                                        }}
+                                    >
+                                        Remove
+                                    </button>
+                                </td>
+
+                                <td>
+                                    <button
+                                        type='button'
+                                        onClick={() => {
+                                            setAnimals(
+                                                animals.reduce((prev, curr) => {
+                                                    return animal.id === curr.id
+                                                        ? [curr, ...prev]
+                                                        : [...prev, curr];
+                                                }, [])
+                                            );
+                                        }}
+                                    >
+                                        Move to top
+                                    </button>
+                                </td>
+                            </tr>
+                        )
+                        )}
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sectors:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {animalSector.map((sector, index) => (
+                            <tr key={index}>
+                                <td>{sector}</td>
+                                <td>
+                                    <button
+                                        type='button'
+                                        onClick={() => {
+                                            alert(
+                                                animals
+                                                    .filter((animal) => animal.sector === sector)
+                                                    .map((obj) => `${obj.name} (${obj.species}) \n`)
+                                            );
+                                        }}
+                                    >
+                                        Check Animals
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 

@@ -4,11 +4,21 @@
     max-width: 50%;
     margin: auto;
 }
-.form button {
-    width: 5rem;
-    margin: 1rem auto;
-}
+
 .table{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    width: 100%;
+    max-width: 50%;
+    margin: auto;
+    border: 1px solid black;
+}
+.table button {
+    width: 5.5rem;
+    height: 2rem;
+    margin: 1rem auto;
+    background: rgb(57, 117, 236);
+    color: white;
+    border-radius: 3px;
+    border: none;
 }
