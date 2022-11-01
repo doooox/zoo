@@ -41,9 +41,11 @@ const AnimalList = () => {
             dateOfBirth: ''
         },
     ]);
+    const animalSector = ["Dog", "Cat", "Rabbit", "Hedgehog", "Lion", "Parrot"];
     const [species, setSpecies] = useState('');
     const [name, setName] = useState('');
     const [dateOfBirth, setDateOfBirth] = useState('')
+    const [sector, setSector] = useState('');
 
 
     const speciesHandler = (event) => {
@@ -59,7 +61,7 @@ const AnimalList = () => {
     const addAnimalHandler = (event) => {
 
         event.preventDefault();
-        
+
         setSpecies('')
         setName('')
         setDateOfBirth();
@@ -68,11 +70,8 @@ const AnimalList = () => {
             return alert('All fealds required!')
         }
 
-        return setAnimals([...animals, { species, name, dateOfBirth: date, id: Math.random() }]);
-
-
+        return setAnimals([...animals, { species, name, dateOfBirth: date,sector, id: Math.random() }]);
     }
-
 
     return (
         <div>
@@ -84,7 +83,7 @@ const AnimalList = () => {
                     value={species}
                     onChange={speciesHandler}
                 />
-                <label htmlFor="animalName">Animal name</label>
+                <label htmlFor="animalName">Animal nasme</label>
                 <input
                     type="text"
                     id="animalName"
@@ -98,6 +97,17 @@ const AnimalList = () => {
                     value={dateOfBirth}
                     onChange={dateOfBirthHandler}
                 />
+                <select
+                    onChange={(e) => {
+                        {
+                            setSector(e.target.value);
+                        }
+                    }}
+                >
+                    {animalSector.map((sector) => {
+                        return <option>{sector}</option>;
+                    })}
+                </select>
                 <button type="submit">Submit</button>
             </form>
             <table className={classes.table}>
@@ -106,6 +116,7 @@ const AnimalList = () => {
                         <th>Species</th>
                         <th>Name</th>
                         <th>Date of Birth</th>
+                        <th>Sector</th>
 
                     </tr>
                 </thead>
@@ -115,7 +126,8 @@ const AnimalList = () => {
                         <tr key={animal.id}>
                             <td>{animal.species}</td>
                             <td>{animal.name}</td>
-                            <td>{animal.dateOfBirth ? animal.dateOfBirth : "Nepoznat"}</td>
+                            <td>{animal.dateOfBirth ? animal.dateOfBirth : "Unknown"}</td>
+                            <td>{animal.sector ? animal.sector: "Unknown"}</td>
                             <td>
                                 <button
                                     type='button'
@@ -157,4 +169,3 @@ const AnimalList = () => {
 }
 
 export default AnimalList
-
