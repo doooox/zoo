@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
+import classes from './AnimalList.module.css'
 
 const AnimalList = () => {
-    const date = new Date().toISOString().toString();
+    const date = new Date().toLocaleDateString();
     const [animals, setAnimals] = useState([
         {
             id: 1,
@@ -40,15 +41,70 @@ const AnimalList = () => {
             dateOfBirth: ''
         },
     ]);
+    const [species, setSpecies] = useState('');
+    const [name, setName] = useState('');
+    const [dateOfBirth, setDateOfBirth] = useState('')
+
+
+    const speciesHandler = (event) => {
+        setSpecies(event.target.value)
+    }
+    const nameHandler = (event) => {
+        setName(event.target.value)
+    }
+    const dateOfBirthHandler = (event) => {
+        setDateOfBirth(event.target.value)
+    }
+
+    const addAnimalHandler = (event) => {
+
+        event.preventDefault();
+        
+        setSpecies('')
+        setName('')
+        setDateOfBirth();
+
+        if (species.trim().length === 0 && name.trim().length === 0 && dateOfBirth.trim().length === 0) {
+            return alert('All fealds required!')
+        }
+
+        return setAnimals([...animals, { species, name, dateOfBirth: date, id: Math.random() }]);
+
+
+    }
 
 
     return (
         <div>
-            <table>
+            <form className={classes.form} onSubmit={addAnimalHandler}>
+                <label htmlFor="animalSpecies">Animal species</label>
+                <input
+                    type="text"
+                    id="animalSpecies"
+                    value={species}
+                    onChange={speciesHandler}
+                />
+                <label htmlFor="animalName">Animal name</label>
+                <input
+                    type="text"
+                    id="animalName"
+                    value={name}
+                    onChange={nameHandler}
+                />
+                <label htmlFor="animalDateOfBirth">Date of birth</label>
+                <input
+                    type="date"
+                    id="animalDateOfBirth"
+                    value={dateOfBirth}
+                    onChange={dateOfBirthHandler}
+                />
+                <button type="submit">Submit</button>
+            </form>
+            <table className={classes.table}>
                 <thead>
                     <tr>
-                        <th>species</th>
-                        <th>name</th>
+                        <th>Species</th>
+                        <th>Name</th>
                         <th>Date of Birth</th>
 
                     </tr>
@@ -101,3 +157,4 @@ const AnimalList = () => {
 }
 
 export default AnimalList
+
