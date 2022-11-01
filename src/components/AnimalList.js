@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 const AnimalList = () => {
     const date = new Date().toISOString().toString();
@@ -40,8 +40,8 @@ const AnimalList = () => {
             dateOfBirth: ''
         },
     ]);
-    
- 
+
+
     return (
         <div>
             <table>
@@ -71,6 +71,23 @@ const AnimalList = () => {
                                     }}
                                 >
                                     Remove
+                                </button>
+                            </td>
+
+                            <td>
+                                <button
+                                    type='button'
+                                    onClick={() => {
+                                        setAnimals(
+                                            animals.reduce((prev, curr) => {
+                                                return animal.id === curr.id
+                                                    ? [curr, ...prev]
+                                                    : [...prev, curr];
+                                            }, [])
+                                        );
+                                    }}
+                                >
+                                    Move to top
                                 </button>
                             </td>
                         </tr>
